@@ -26,3 +26,25 @@ print(three_of_clubs.value)
 print(two_of_hearts.value)
 
 print(two_of_hearts.value < three_of_clubs.value)
+
+### Now I am taking my card class and basically making it into a deck that while shuffle when a new instance of the deck is made
+
+class Deck:
+
+    def __init__(self):
+        #empyt list where i will put my deck 
+        self.all_cards = []
+        #creating all 52 cards in a deck
+        for suit in suits:
+            for rank in ranks:
+                #this creates the card object
+                create_card = Card(suit,rank)
+                self.all_cards.append(create_card)
+    
+    def shuffle(self):
+        random.shuffle(self.all_cards)
+
+    def deal_one(self):
+        return self.all_cards.pop()
+
+#### 
