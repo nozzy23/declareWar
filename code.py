@@ -19,13 +19,6 @@ class Card:
     def __str__(self):
         print (f'This card is the {self.value} of {self.suit}')
 
-three_of_clubs = Card('Clubs', 'Three')
-two_of_hearts = Card('Hearts', 'Two')
-
-print(three_of_clubs.value)
-print(two_of_hearts.value)
-
-print(two_of_hearts.value < three_of_clubs.value)
 
 ### Now I am taking my card class and basically making it into a deck that while shuffle when a new instance of the deck is made
 
@@ -57,6 +50,7 @@ class Player:
 
     def remove_card(self):
         return self.all_cards.pop(0)
+        
     def add_card(self,new_cards):
         #adding a list of multiple cards in a list 
         if type(new_cards) == type([]):
@@ -68,7 +62,80 @@ class Player:
     def __str__(self):
         return f'player {self.name} has {len(self.all_cards)} cards'
 
+##### setting the game up 
+player_one = Player('Oscar')
+player_two = Player('Sophia')
 
-new_player = Player('Oscar')
+new_deck = Deck()
+new_deck.shuffle()
 
-print(new_player)
+for x in range (26):
+    player_one.add_card(new_deck.deal_one())
+    player_two.add_card(new_deck.deal_one())
+
+game_on = True 
+#####game logic 
+
+round_num = 0 
+
+while game_on:
+    round_num += 1
+    print(f'Number of rounds {round_num}!!')
+
+    #determine a loser 
+
+    if len(player_one.all_cards) == 0:
+        print ('Oscar is out of cards! Sophia has Won!')
+        game_on = False
+        break
+
+    if len(player_two.all_cards) == 0:
+        print ('Sophia is out of cards! Oscar has Won!')
+        game_on = False
+        break
+
+    # Start a round 
+    player_one_cards = []
+    player_one_cards.append(player_one.remove_card())
+    player_two_cards = []
+    player_two_cards.append(player_two.remove_card())
+
+    # When players pull out the same card and war is started
+
+    at_war = True
+
+    while at_war:
+
+        if player_one_cards[-1].value > player_two_cards[-1].value:
+
+            player_one.add_card(player_one_cards)
+            player_one.add_card(player_two_cards)
+
+            at_war = False
+
+        elif player_one_cards[-1].value > player_two_cards[-1].value:
+
+            player_one.add_card(player_one_cards)
+            player_one.add_card(player_two_cards)
+
+            at_war = False
+
+        else:
+            print('WAR!!!!!!')
+
+            if len(player_one.all_cards) < 5:
+                print('Oscar was unable to declare war!')
+                print('Sophia wins')
+                game_on = False
+                break
+
+            elif len(player_two.all_cards) < 5:
+                print('Sophia was unable to declare war!')
+                print('Oscar Two wins')
+                game_on = False
+                break
+
+            else:
+                for num in range(5):
+                    player_one_cards.append(player_one.remove_card())
+                    player_two_cards.append(player_two.remove_card())
