@@ -47,4 +47,28 @@ class Deck:
     def deal_one(self):
         return self.all_cards.pop()
 
-#### 
+#### Making the Player Class
+
+class Player:
+
+    def __init__(self,name):
+        self.name = name
+        self.all_cards = []
+
+    def remove_card(self):
+        return self.all_cards.pop(0)
+    def add_card(self,new_cards):
+        #adding a list of multiple cards in a list 
+        if type(new_cards) == type([]):
+            self.all_cards.extend(new_cards)
+        else:
+            #just one card now 
+            self.all_cards.append(new_cards)
+
+    def __str__(self):
+        return f'player {self.name} has {len(self.all_cards)} cards'
+
+
+new_player = Player('Oscar')
+
+print(new_player)
